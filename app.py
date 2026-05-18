@@ -434,5 +434,5 @@ Provide a beautiful, detailed outfit recommendation with specific clothing items
 
 
 if __name__ == '__main__':
-    print("\n🌟 VOGUE.AI Backend starting on http://localhost:8080\n")
-    app.run(debug=True, port=8080, host='127.0.0.1')
+    port = int(os.environ.get('PORT', 8080))
+    app.run(debug=False, port=port, host='0.0.0.0')
