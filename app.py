@@ -18,6 +18,8 @@ import os
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
+print("🚀 Flask app initialized successfully!")
+print(f"PORT = {os.environ.get('PORT')}")
 
 # ─────────────────────────────────────────────
 #  SERVE FRONTEND
@@ -433,6 +435,13 @@ Provide a beautiful, detailed outfit recommendation with specific clothing items
         return jsonify({"success": False, "error": "AI service error. Please try again later."}), 500
 
 
+# ====================== RUN THE APP ======================
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
-    app.run(debug=False, port=port, host='0.0.0.0')
+    print(f"🚀 Starting Flask app on port {port}")
+    app.run(debug=False, host='0.0.0.0', port=port)
+
+else:
+    # This runs when Render uses gunicorn
+    port = int(os.environ.get('PORT', 8080))
+    print(f"✅ App loaded successfully for Gunicorn on port {port}")
