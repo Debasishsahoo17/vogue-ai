@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOGUE.AI - Recommendations</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body {
+  background: linear-gradient(120deg,rgba(10,11,15,0.88),rgba(15,16,24,0.88)),
+    url('https://cdn.prod.website-files.com/603f5d1df4ee236b69719ff2/65e81d04f6a87e38c021a301_65c4aca19461c18275d991c9.webp') no-repeat center center fixed;
+  background-size:cover; background-blend-mode:overlay;
+  color:#f5f5f5; overflow-x:hidden; min-height:100vh;
+  transition:background 1s,color 0.5s;
+}
+body.light-mode {
+  background: linear-gradient(rgba(245,245,245,0.82),rgba(232,232,238,0.82)),
+    url('https://cdn.prod.website-files.com/603f5d1df4ee236b69719ff2/65e81d04f6a87e38c021a301_65c4aca19461c18275d991c9.webp') no-repeat center center fixed;
+  background-size:cover; color:#111;
+}
+/* NAVBAR */
+.navbar {
+  position:fixed; width:100%; top:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:18px 50px;
+  background:rgba(15,17,30,0.88);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px); z-index:1000;
+}
+body.light-mode .navbar { background:rgba(255,255,255,0.92); border-bottom:1px solid #ddd; }
+.logo { font-weight:700; font-size:22px; background:linear-gradient(90deg,#d4af37,#f5f5f5); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:25px; list-style:none; }
+.nav-links a { color:#f5f5f5; text-decoration:none; font-weight:500; font-size:14px; transition:0.3s; }
+body.light-mode .nav-links a { color:#111; }
+.nav-links a:hover { color:#d4af37; }
+.toggle-btn { cursor:pointer; font-size:18px; color:#f5f5f5; background:rgba(255,255,255,0.1); padding:8px 12px; border-radius:50%; transition:0.3s; }
+body.light-mode .toggle-btn { color:#111; background:rgba(0,0,0,0.06); }
+
+/* HERO */
+.hero { padding:130px 20px 30px; text-align:center; }
+.hero h1 { font-size:36px; background:linear-gradient(90deg,#d4af37,#f5f5f5); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:0 0 20px rgba(212,175,55,0.4); margin-bottom:8px; }
+.hero p { color:rgba(255,255,255,0.65); font-size:16px; }
+body.light-mode .hero p { color:rgba(0,0,0,0.6); }
+
+/* FORM CARD */
+.form-section { display:flex; justify-content:center; padding:10px 20px 30px; }
+.form-card {
+  background:rgba(0,0,0,0.52); backdrop-filter:blur(14px);
+  border-radius:24px; padding:40px 35px;
+  max-width:720px; width:100%;
+  box-shadow:0 25px 70px rgba(0,0,0,0.55);
+  transition:0.3s;
+}
+.form-card:hover { transform:translateY(-4px); box-shadow:0 35px 90px rgba(212,175,55,0.3); }
+body.light-mode .form-card { background:rgba(255,255,255,0.88); color:#111; }
+.form-card h2 { text-align:center; margin-bottom:25px; font-size:26px; background:linear-gradient(90deg,#d4af37,#f5f5f5); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+/* SELECTS */
+.row { display:flex; gap:15px; margin-bottom:18px; flex-wrap:wrap; }
+.row select, .row input {
+  flex:1; min-width:140px; padding:12px 15px; border-radius:12px; border:none;
+  background:rgba(255,255,255,0.1); color:#f5f5f5; font-size:14px;
+  transition:0.3s; outline:none;
+}
+body.light-mode .row select, body.light-mode .row input { background:#f1f5f9; color:#111; border:1px solid #ccc; }
+.row select:focus, .row input:focus { box-shadow:0 0 12px rgba(212,175,55,0.5); background:rgba(255,255,255,0.18); }
+body.light-mode .row select option { background:#fff; color:#111; }
+.row select option { background:#1a1d2e; }
+
+/* CHIPS */
+.chip-label { font-size:13px; font-weight:500; margin-bottom:10px; opacity:0.8; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+.chip { padding:8px 16px; border-radius:20px; background:rgba(255,255,255,0.08); cursor:pointer; font-size:13px; transition:0.3s; user-select:none; border:1px solid rgba(255,255,255,0.1); }
+body.light-mode .chip { background:#eee; border-color:#ccc; color:#111; }
+.chip.active { background:#d4af37; color:#111; border-color:#d4af37; font-weight:600; }
+
+/* COLOR PALETTE */
+.color-row { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
+.color-dot { width:34px; height:34px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:0.3s; }
+.color-dot.active { border-color:#fff; transform:scale(1.2); box-shadow:0 0 10px rgba(212,175,55,0.6); }
+
+/* TEXTAREA */
+.form-card textarea {
+  width:100%; min-height:100px; resize:none; padding:14px;
+  border-radius:12px; border:none; background:rgba(255,255,255,0.07);
+  color:#f5f5f5; font-size:14px; outline:none; transition:0.3s; margin-bottom:18px;
+}
+body.light-mode .form-card textarea { background:#f1f5f9; color:#111; border:1px solid #ccc; }
+.form-card textarea:focus { box-shadow:0 0 12px rgba(212,175,55,0.4); }
+
+/* GENERATE BUTTON */
+.gen-btn {
+  width:100%; padding:15px; border:none; border-radius:12px;
+  font-size:16px; font-weight:600; cursor:pointer;
+  background:linear-gradient(90deg,#d4af37,#f5c842);
+  color:#111; box-shadow:0 12px 30px rgba(212,175,55,0.4); transition:0.3s;
+}
+.gen-btn:hover { transform:translateY(-3px); box-shadow:0 18px 45px rgba(212,175,55,0.7); }
+.gen-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+/* LOADER */
+.loader-section { text-align:center; padding:40px 20px; display:none; }
+.spinner { width:50px; height:50px; border:4px solid rgba(212,175,55,0.2); border-top-color:#d4af37; border-radius:50%; animation:spin 0.9s linear infinite; margin:0 auto 15px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loader-section p { color:#d4af37; font-size:15px; }
+
+/* RESULTS */
+.results-section { padding:10px 30px 60px; max-width:1100px; margin:0 auto; }
+.results-title { text-align:center; font-size:22px; margin-bottom:25px; font-weight:600; }
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:25px; }
+
+/* OUTFIT CARD */
+.outfit-card {
+  background:rgba(0,0,0,0.5); backdrop-filter:blur(12px);
+  border-radius:20px; overflow:hidden; transition:0.35s;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.outfit-card:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 25px 70px rgba(212,175,55,0.5); }
+body.light-mode .outfit-card { background:rgba(255,255,255,0.92); border:1px solid #e5e5e5; }
+.outfit-img-wrap { position:relative; height:320px; overflow:hidden; background:#111; }
+.outfit-img-wrap img { width:100%; height:100%; object-fit:cover; transition:0.5s; display:block; }
+.outfit-card:hover .outfit-img-wrap img { transform:scale(1.05); }
+.img-loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); }
+.img-loading .mini-spin { width:30px; height:30px; border:3px solid rgba(212,175,55,0.3); border-top-color:#d4af37; border-radius:50%; animation:spin 0.8s linear infinite; }
+.outfit-badge {
+  position:absolute; top:12px; left:12px;
+  background:rgba(212,175,55,0.9); color:#111;
+  padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;
+}
+.outfit-body { padding:18px; }
+.outfit-body h3 { font-size:17px; font-weight:600; margin-bottom:6px; }
+body.light-mode .outfit-body h3 { color:#111; }
+.outfit-body p { font-size:13px; opacity:0.75; line-height:1.6; margin-bottom:10px; }
+body.light-mode .outfit-body p { color:#444; }
+.outfit-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:12px; }
+.tag { padding:3px 10px; border-radius:20px; font-size:11px; background:rgba(212,175,55,0.15); color:#d4af37; border:1px solid rgba(212,175,55,0.3); }
+.add-wardrobe-btn {
+  width:100%; padding:10px; border:none; border-radius:10px;
+  background:linear-gradient(90deg,#d4af37,#f5c842);
+  color:#111; font-weight:600; font-size:13px; cursor:pointer; transition:0.3s;
+}
+.add-wardrobe-btn:hover { box-shadow:0 8px 25px rgba(212,175,55,0.5); transform:translateY(-2px); }
+
+/* TOAST */
+.toast { position:fixed; bottom:30px; right:30px; background:#d4af37; color:#111; padding:12px 22px; border-radius:12px; font-weight:600; font-size:14px; z-index:9999; opacity:0; transform:translateY(20px); transition:0.4s; pointer-events:none; }
+.toast.show { opacity:1; transform:translateY(0); }
+
+footer { text-align:center; padding:20px; background:rgba(15,17,30,0.85); color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.05); backdrop-filter:blur(8px); }
+body.light-mode footer { background:rgba(255,255,255,0.95); color:#555; border-top:1px solid #ddd; }
+
+@media(max-width:600px) {
+  .navbar { padding:14px 20px; }
+  .nav-links { gap:14px; }
+  .hero h1 { font-size:26px; }
+  .form-card { padding:25px 18px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">VOGUE.AI</div>
+  <ul class="nav-links">
+    <li><a href="../index.html"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="tryon.html"><i class="fa fa-magic"></i> Try-On</a></li>
+    <li><a href="analyse.html"><i class="fa fa-chart-line"></i> Analyse</a></li>
+    <li><a href="wardrobe.html"><i class="fa fa-briefcase"></i> Wardrobe</a></li>
+  </ul>
+  <div class="toggle-btn" id="themeToggle"><i class="fa fa-moon"></i></div>
+</nav>
+
+<section class="hero">
+  <h1>AI Outfit Recommendation 👗</h1>
+  <p>Fill in your profile and let AI generate real fashion looks for you</p>
+</section>
+
+<section class="form-section">
+  <div class="form-card">
+    <h2>Your Style Profile</h2>
+    <form id="profileForm">
+
+      <div class="row">
+        <select id="gender">
+          <option value="">Gender</option>
+          <option>Female</option><option>Male</option><option>Other</option>
+        </select>
+        <select id="bodyType">
+          <option value="">Body Type</option>
+          <option>Slim</option><option>Athletic</option><option>Curvy</option><option>Plus</option><option>Petite</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <select id="occasion">
+          <option value="">Occasion</option>
+          <option>Casual</option><option>Party</option><option>Office</option><option>Wedding</option><option>Formal</option>
+        </select>
+        <select id="season">
+          <option value="">Season</option>
+          <option>Summer</option><option>Winter</option><option>Spring</option><option>Autumn</option>
+        </select>
+      </div>
+
+      <div class="chip-label">Preferred Styles</div>
+      <div class="chips" id="styleChips">
+        <span class="chip" data-v="Minimalist">Minimalist</span>
+        <span class="chip" data-v="Luxury">Luxury</span>
+        <span class="chip" data-v="Streetwear">Streetwear</span>
+        <span class="chip" data-v="Officewear">Officewear</span>
+        <span class="chip" data-v="Romantic">Romantic</span>
+        <span class="chip" data-v="Sporty">Sporty</span>
+        <span class="chip" data-v="Bohemian">Bohemian</span>
+      </div>
+
+      <div class="chip-label">Colour Palette</div>
+      <div class="color-row" id="colorPalette">
+        <div class="color-dot" data-v="Neutral"    style="background:linear-gradient(135deg,#d1d5db,#6b7280)" title="Neutral"></div>
+        <div class="color-dot" data-v="Bright"     style="background:linear-gradient(135deg,#facc15,#f43f5e)" title="Bright"></div>
+        <div class="color-dot" data-v="Dark"       style="background:linear-gradient(135deg,#020617,#1e293b)" title="Dark"></div>
+        <div class="color-dot" data-v="Pastel"     style="background:linear-gradient(135deg,#fbcfe8,#bfdbfe)" title="Pastel"></div>
+        <div class="color-dot" data-v="Earthy"     style="background:linear-gradient(135deg,#78350f,#65a30d)" title="Earthy"></div>
+        <div class="color-dot" data-v="Monochrome" style="background:linear-gradient(135deg,#000,#fff)"       title="Monochrome"></div>
+        <div class="color-dot" data-v="Vibrant"    style="background:linear-gradient(135deg,#ff0000,#00ffea)" title="Vibrant"></div>
+        <div class="color-dot" data-v="Cool"       style="background:linear-gradient(135deg,#0ea5e9,#6366f1)" title="Cool"></div>
+        <div class="color-dot" data-v="Warm"       style="background:linear-gradient(135deg,#f97316,#ef4444)" title="Warm"></div>
+      </div>
+
+      <div class="row">
+        <select id="budget">
+          <option value="">Budget</option>
+          <option>Low</option><option>Medium</option><option>High</option>
+        </select>
+      </div>
+
+      <textarea id="context" placeholder="Describe your dream outfit or any special requirements…"></textarea>
+
+      <button type="submit" class="gen-btn" id="genBtn">✨ Generate AI Outfits</button>
+    </form>
+  </div>
+</section>
+
+<div class="loader-section" id="loader">
+  <div class="spinner"></div>
+  <p>AI is creating your personalized looks…</p>
+</div>
+
+<section class="results-section" id="resultsSection" style="display:none;">
+  <div class="results-title">✨ Your AI-Generated Looks</div>
+  <div class="cards-grid" id="cardsGrid"></div>
+</section>
+
+<div class="toast" id="toast"></div>
+<footer>© 2026 VOGUE.AI | AI Fashion Recommendation System</footer>
+
+<script>
+const API = 'http://localhost:8080';
+
+// Theme
+const toggleBtn = document.getElementById('themeToggle');
+if(localStorage.getItem('theme')==='light'){ document.body.classList.add('light-mode'); toggleBtn.innerHTML='<i class="fa fa-sun"></i>'; }
+toggleBtn.addEventListener('click',()=>{
+  document.body.classList.toggle('light-mode');
+  toggleBtn.innerHTML = document.body.classList.contains('light-mode')
+    ? '<i class="fa fa-sun"></i>' : '<i class="fa fa-moon"></i>';
+  localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+});
+
+// Chips
+document.querySelectorAll('#styleChips .chip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('active')));
+let selectedColor = '';
+document.querySelectorAll('#colorPalette .color-dot').forEach(d=>{
+  d.addEventListener('click',()=>{
+    document.querySelectorAll('.color-dot').forEach(x=>x.classList.remove('active'));
+    d.classList.add('active');
+    selectedColor = d.dataset.v;
+  });
+});
+
+// Toast
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+
+// Form submit
+document.getElementById('profileForm').addEventListener('submit', async(e)=>{
+  e.preventDefault();
+  const styles = [...document.querySelectorAll('#styleChips .chip.active')].map(c=>c.dataset.v);
+  if(styles.length===0){ showToast('⚠️ Pick at least one style'); return; }
+
+  const payload = {
+    gender:   document.getElementById('gender').value || 'Female',
+    bodyType: document.getElementById('bodyType').value || 'Slim',
+    occasion: document.getElementById('occasion').value || 'Casual',
+    season:   document.getElementById('season').value || 'Summer',
+    styles,
+    color:    selectedColor || 'Neutral',
+    budget:   document.getElementById('budget').value || 'Medium',
+    context:  document.getElementById('context').value,
+  };
+
+  document.getElementById('genBtn').disabled = true;
+  document.getElementById('genBtn').textContent = '⏳ Generating…';
+  document.getElementById('loader').style.display = 'block';
+  document.getElementById('resultsSection').style.display = 'none';
+
+  try {
+    const res  = await fetch(`${API}/api/recommend`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if(data.success){
+      renderOutfits(data.outfits, payload);
+    } else {
+      showToast('❌ ' + (data.error || 'Something went wrong'));
+    }
+  } catch(err){
+    showToast('❌ Cannot connect to backend. Is Flask running?');
+  } finally {
+    document.getElementById('genBtn').disabled = false;
+    document.getElementById('genBtn').textContent = '✨ Generate AI Outfits';
+    document.getElementById('loader').style.display = 'none';
+  }
+});
+
+function renderOutfits(outfits, payload){
+  const grid = document.getElementById('cardsGrid');
+  grid.innerHTML = '';
+  outfits.forEach(o=>{
+    const card = document.createElement('div');
+    card.className = 'outfit-card';
+    card.innerHTML = `
+      <div class="outfit-img-wrap">
+        <div class="img-loading" id="load-${o.id}"><div class="mini-spin"></div></div>
+        <img src="${o.image_url}" alt="${o.name}"
+          onload="document.getElementById('load-${o.id}').style.display='none'"
+          onerror="this.src='https://via.placeholder.com/400x480/1a1d2e/d4af37?text=AI+Fashion';document.getElementById('load-${o.id}').style.display='none'">
+        <span class="outfit-badge">${o.occasion}</span>
+      </div>
+      <div class="outfit-body">
+        <h3>${o.name}</h3>
+        <p>${o.description}</p>
+        <div class="outfit-tags">
+          ${o.tags.slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('')}
+        </div>
+        <button class="add-wardrobe-btn" onclick="addToWardrobe(${JSON.stringify(o).replace(/"/g,'&quot;')})">
+          <i class="fa fa-plus"></i> Save to Wardrobe
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  document.getElementById('resultsSection').style.display = 'block';
+  document.getElementById('resultsSection').scrollIntoView({behavior:'smooth'});
+}
+
+async function addToWardrobe(outfit){
+  try {
+    const res = await fetch(`${API}/api/wardrobe`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name:      outfit.name,
+        category:  'Outfit',
+        color:     outfit.color,
+        occasion:  outfit.occasion,
+        season:    outfit.season,
+        image_url: outfit.image_url,
+        notes:     outfit.description,
+      })
+    });
+    const d = await res.json();
+    if(d.success) showToast('✅ Saved to Wardrobe!');
+    else showToast('❌ Could not save');
+  } catch { showToast('❌ Backend not reachable'); }
+}
+</script>
+</body>
+</html>

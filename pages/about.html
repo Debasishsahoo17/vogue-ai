@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | VOGUE.AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ===== RESET ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+body { 
+  background: linear-gradient(120deg,#0a0b0f,#0f1018);
+  background-image: url('https://glance-web.glance-cdn.com/woman_standing_store_looking_display_clothing_generative_ai_1_0799ff7e0a.jpg'); /* Add your main background image here */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #f5f5f5;
+  overflow-x: hidden;
+  transition: background 1s, color 0.5s;
+  scroll-behavior: smooth;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position: fixed;
+  width: 100%;
+  top:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 50px;
+  background: rgba(15,17,30,0.85);
+  z-index:1000;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+}
+.nav-links a{
+  margin-left:30px;
+  text-decoration:none;
+  color:#f5f5f5;
+  transition: 0.3s;
+  font-weight:500;
+}
+.nav-links a:hover { color:#d4af37; }
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #d4af37, #f5f5f5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+  animation: shimmer 3s infinite linear;
+}
+@keyframes shimmer { 0%{ background-position:0% 50%; } 100%{ background-position:100% 50%; } }
+
+/* ===== VERTICAL TIMELINE CONTAINER ===== */
+.vertical-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 140px auto 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  position: relative;
+}
+
+/* ===== TIMELINE LINE ===== */
+.vertical-container::before {
+  content:''; position:absolute; left:40px; top:0; bottom:0;
+  width:6px;
+  background: linear-gradient(to bottom, #d4af37, rgba(212,175,55,0));
+  border-radius:3px;
+  opacity:0.5;
+  animation: pulse 2.5s infinite alternate;
+}
+@keyframes pulse { 0%{opacity:0.3;} 50%{opacity:0.6;} 100%{opacity:0.3;} }
+
+/* ===== CARD STYLE ===== */
+.card {
+  background: rgba(0,0,0,0.4); /* Default dark card */
+  color: #f5f5f5;
+  backdrop-filter: blur(22px);
+  padding: 50px 40px 50px 120px;
+  border-radius: 30px;
+  box-shadow: 0 35px 100px rgba(0,0,0,0.8);
+  opacity: 0;
+  transform: translateY(80px) rotateX(8deg) rotateY(-5deg) scale(0.95);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+.card-number {
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 52px;
+  font-weight: 700;
+  color: #d4af37;
+  opacity:0.4;
+  text-shadow:0 0 25px rgba(212,175,55,0.8);
+}
+
+/* CARD CONTENT WITH IMAGE */
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.card-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  flex-shrink: 0;
+}
+.card-text p {
+  background: rgba(0,0,0,0.2);
+  padding: 5px 8px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* CARD TITLES */
+.card h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #d4af37, #f5f5f5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+  animation: shimmer 3s infinite linear;
+}
+
+/* SCROLL INTO VIEW ANIMATION */
+.card.show {
+  opacity:1;
+  transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1);
+}
+
+/* CARD HOVER 3D TILT + SHIMMER */
+.card:hover {
+  transform: translateY(-15px) rotateX(4deg) rotateY(6deg) scale(1.05);
+  box-shadow: 0 50px 120px rgba(212,175,55,0.9);
+}
+.card:hover h2 { text-shadow: 0 0 35px rgba(212,175,55,1); }
+
+/* ===== LIGHT/DARK THEME CARD COLORS ===== */
+body.light-theme .card {
+  background: rgba(255,255,255,0.85); 
+  color: #111;
+  backdrop-filter: blur(15px);
+}
+body.light-theme .card p,
+body.light-theme .card h2 { color: #111; }
+body.light-theme .card-number {
+  color: #b38f5b; 
+  text-shadow:0 0 15px rgba(179,143,91,0.8);
+}
+
+/* LIGHT THEME BODY */
+body.light-theme {
+  background: linear-gradient(135deg,#f5f5f5,#e8e8ee);
+  color: #111;
+}
+body.light-theme .navbar { background: rgba(255,255,255,0.95); border-bottom:1px solid rgba(0,0,0,0.08);}
+body.light-theme .nav-links a { color: #111; }
+body.light-theme .logo { background: linear-gradient(90deg,#d4af37,#b38f5b); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:25px 10px;
+  background: rgba(15,17,30,0.85);
+  color:#f5f5f5;
+  border-top:1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  margin-top: 80px;
+}
+body.light-theme footer { 
+  background: rgba(255,255,255,0.95); 
+  color:#111;
+  border-top:1px solid rgba(0,0,0,0.08);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .vertical-container { padding:0 20px; }
+  .card { padding: 40px 20px 40px 90px; flex-direction: column; }
+  .card-number { left: -40px; font-size:38px; }
+  .vertical-container::before { left:25px; width:4px; }
+  .card-content { flex-direction: column; align-items: flex-start; gap:15px; }
+  .card-img { width:100%; height:auto; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">VOGUE.AI</div>
+  <div class="nav-links">
+    <a href="../index.html"><i class="fa fa-home"></i>Home</a>
+    <a href="recommend.html"><i class="fa fa-shirt"></i>Recommended</a>
+    <a href="tryon.html"><i class="fa fa-user"></i>Try-On</a>
+    <a href="contact.html"><i class="fa fa-envelope"></i>Contact</a>
+  </div>
+  <i class="fas fa-moon theme-toggle" id="themeToggle" title="Toggle Dark/Light" style="cursor:pointer; font-size:18px;"></i>
+</div>
+
+<!-- VERTICAL TIMELINE CARDS -->
+<div class="vertical-container">
+  <div class="card"><div class="card-number">1</div>
+    <div class="card-content">
+      <img src="https://thumbs.dreamstime.com/b/black-us-sign-icon-logo-isolated-white-background-black-us-sign-icon-logo-isolated-white-background-simple-172074347.jpg" alt="AI Fashion" class="card-img">
+      <div class="card-text">
+        <h2>About VOGUE.AI</h2>
+        <p><i class="fa fa-robot"></i> AI-powered fashion assistant</p>
+        <p>We combine AI and design to help you style like a pro.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-number">2</div>
+    <div class="card-content">
+      <img src="https://img.freepik.com/premium-vector/target-mission-pursuit-success-focus_593183-594.jpg?semt=ais_hybrid&w=740&q=80" alt="Mission" class="card-img">
+      <div class="card-text">
+        <h2>Our Mission</h2>
+        <p><i class="fa fa-bullseye"></i> Effortless fashion</p>
+        <p>Smart AI recommendations & virtual try-ons for everyone.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-number">3</div>
+    <div class="card-content">
+      <img src="https://static.vecteezy.com/system/resources/previews/025/390/038/non_2x/abstract-eye-vision-logo-creative-vision-logo-template-vector.jpg" alt="Vision" class="card-img">
+      <div class="card-text">
+        <h2>Our Vision</h2>
+        <p><i class="fa fa-eye"></i> Future of fashion</p>
+        <p>To create a world where fashion meets technology seamlessly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-number">4</div>
+    <div class="card-content">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5OQxKS6iIWmeu2A6gBU2xJ_dQ0L18FoDe1w&s" alt="Team" class="card-img">
+      <div class="card-text">
+        <h2>Team</h2>
+        <p><i class="fa fa-users"></i> AI engineers & designers</p>
+        <p>Passionate about making fashion intelligent & accessible.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-number">5</div>
+    <div class="card-content">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNJ0A4rT96FUujJmuH79ufUudjysR8YoVkFA&s" alt="Contact" class="card-img">
+      <div class="card-text">
+        <h2>Contact Us</h2>
+        <p><i class="fa fa-envelope"></i> support@example.com</p>
+        <p><i class="fa fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fa fa-map-marker-alt"></i> India</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 VOGUE.AI | All Rights Reserved
+</footer>
+
+<script>
+// ===== LIGHT/DARK THEME =====
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-theme");
+
+  // Change icon
+  if(document.body.classList.contains("light-theme")){
+    themeToggle.classList.replace("fa-moon","fa-sun");
+  } else {
+    themeToggle.classList.replace("fa-sun","fa-moon");
+  }
+});
+
+// ===== SCROLL ANIMATION =====
+const cards = document.querySelectorAll('.card');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){ entry.target.classList.add('show'); }
+  });
+},{ threshold: 0.2 });
+cards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | VOGUE.AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* ===== RESET ===== */
+/* ===== RESET ===== */
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background: linear-gradient(120deg,#0a0b0f,#0f1018); /* premium dark gradient */
+  color:#f5f5f5;
+  overflow-x:hidden;
+  letter-spacing:0.3px;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position:fixed;
+  width:100%;
+  top:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 60px;
+  backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(15,17,30,0.85);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  z-index:1000;
+  transition:0.3s ease-in-out;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+}
+
+.navbar:hover{
+  background:rgba(15,17,30,0.95);
+}
+
+.logo{
+  font-size:24px;
+  font-weight:700;
+  background:linear-gradient(90deg,#d4af37,#f5f5f5);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 12px rgba(212,175,55,0.5);
+}
+
+.nav-links{
+  display:flex;
+  gap:32px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:#f5f5f5;
+  font-size:15px;
+  position:relative;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:#d4af37;
+  transform:translateY(-2px) scale(1.05);
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0%;
+  height:2px;
+  background:#d4af37;
+  border-radius:2px;
+  transition:0.3s;
+}
+
+.nav-links a:hover::after{
+  width:100%;
+}
+
+/* ===== BACKGROUND ===== */
+.bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-2;
+  background: radial-gradient(circle at 20% 30%, #d4af37, transparent 70%),
+              radial-gradient(circle at 80% 70%, #f5f5f5, transparent 70%);
+  opacity:0.04;
+  animation:bgMove 25s infinite alternate ease-in-out;
+}
+
+@keyframes bgMove{
+  to{ transform:translateY(-50px) rotate(3deg);}
+}
+
+/* FLOAT SHAPES */
+.shape{
+  position:absolute;
+  border-radius:50%;
+  opacity:0.06;
+  animation:float 12s infinite ease-in-out;
+}
+
+.shape1{width:120px;height:120px;background:#d4af37;top:15%;left:8%;}
+.shape2{width:180px;height:180px;background:#f5f5f5;bottom:15%;right:10%;}
+
+@keyframes float{
+  50%{transform:translateY(-40px) rotate(5deg);}
+}
+
+/* ===== SECTION ===== */
+section{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:160px 30px 80px;
+  perspective:1200px;
+}
+
+/* ===== CARD ===== */
+.container{
+  width:1000px;
+  max-width:95%;
+  display:flex;
+  border-radius:24px;
+  backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(255,255,255,0.08);
+  box-shadow:
+    inset 0 0 20px rgba(0,0,0,0.5),
+    0 25px 60px rgba(0,0,0,0.8);
+  overflow:hidden;
+  transform:translateY(50px);
+  opacity:0;
+  transition:1s ease;
+  position:relative;
+  z-index:1;
+  transform-style:preserve-3d;
+  padding:25px;
+}
+
+.container::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#d4af37,#f5f5f5);
+  z-index:-1;
+  opacity:0.15;
+  filter:blur(12px);
+}
+
+.container.show{
+  transform:translateY(0) rotateX(0deg);
+  opacity:1;
+}
+
+.container:hover{
+  transform:translateY(-6px) scale(1.015) rotateX(1deg) rotateY(1deg);
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,0.6),
+    0 35px 90px rgba(0,0,0,0.9),
+    0 0 30px rgba(212,175,55,0.2);
+}
+
+/* ===== LEFT ===== */
+.left{
+  flex:1;
+  padding:60px;
+  transform:translateZ(20px);
+}
+
+.left h2{
+  font-size:36px;
+  font-weight:700;
+  margin-bottom:25px;
+  background:linear-gradient(90deg,#f5f5f5,#d4af37);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 15px rgba(212,175,55,0.5);
+}
+
+.left p{
+  opacity:0.9;
+  margin-bottom:40px;
+  line-height:1.75;
+  font-size:15px;
+}
+
+/* INFO */
+.info div{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:22px;
+  opacity:0.85;
+  transition:0.35s;
+}
+
+.info div:hover{
+  transform:translateX(6px) scale(1.03);
+  gap:18px;
+  color:#d4af37;
+}
+
+/* ===== RIGHT ===== */
+.right{
+  flex:1;
+  padding:60px;
+  background:rgba(255,255,255,0.12); /* visible input background */
+  backdrop-filter:blur(18px);
+  transform:translateZ(20px);
+  border-radius:18px;
+}
+
+/* ===== FORM ===== */
+form{
+  display:flex;
+  flex-direction:column;
+  gap:26px;
+}
+
+/* ===== INPUT ===== */
+.inputBox{
+  position:relative;
+}
+
+.inputBox input,
+.inputBox textarea{
+  width:100%;
+  padding:16px 14px;
+  border-radius:12px;
+  border:1px solid rgba(212,175,55,0.5);
+  background:#1c1f28; /* solid, visible */
+  color:#f5f5f5;
+  font-size:15px;
+  outline:none;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.inputBox input:hover,
+.inputBox textarea:hover{
+  border-color:#f5f5f5;
+}
+
+.inputBox input:focus,
+.inputBox textarea:focus{
+  border-color:#d4af37;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 0 8px rgba(212,175,55,0.3);
+  background:#20232d;
+}
+
+.inputBox label{
+  position:absolute;
+  left:14px;
+  top:14px;
+  font-size:13px;
+  color:rgba(245,245,245,0.6);
+  pointer-events:none;
+  transition: all 0.25s ease;
+}
+
+.inputBox input:focus ~ label,
+.inputBox input:not(:placeholder-shown) ~ label,
+.inputBox textarea:focus ~ label,
+.inputBox textarea:not(:placeholder-shown) ~ label{
+  top:-6px;
+  font-size:11px;
+  color:#d4af37;
+  background:#20232d;
+  padding:0 5px;
+  border-radius:4px;
+}
+
+/* ===== BUTTON ===== */
+button{
+  margin-top:10px;
+  padding:14px 0;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#d4af37,#f5f5f5);
+  color:#0b0c10;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.35s;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.35);
+}
+
+button::before{
+  content:"";
+  position:absolute;
+  width:120%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.2),transparent);
+  top:0;
+  left:-120%;
+  transition:0.7s;
+}
+
+button:hover::before{
+  left:100%;
+}
+
+button:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 0 20px rgba(212,175,55,0.35);
+}
+
+button:active{
+  transform:scale(0.96);
+}
+
+/* SUCCESS */
+.success{
+  display:none;
+  text-align:center;
+  color:#a0ffce;
+  font-weight:600;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:#02030a;
+  padding:60px 20px;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.footer h3{
+  font-size:22px;
+  margin-bottom:18px;
+  font-weight:600;
+}
+
+.footer p{
+  opacity:0.75;
+  font-size:15px;
+}
+
+.footer .socials{
+  margin:18px 0;
+}
+
+.footer i{
+  margin:0 10px;
+  font-size:20px;
+  cursor:pointer;
+  transition:0.35s;
+}
+
+.footer i:hover{
+  color:#d4af37;
+  transform:translateY(-3px) scale(1.25);
+}
+
+/* ===== CURSOR GLOW ===== */
+.cursor-glow{
+  position:fixed;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle,#d4af3755,transparent);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:999;
+  filter:blur(6px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .container{
+    flex-direction:column;
+    padding:20px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .left, .right{
+    padding:30px 20px;
+  }
+
+  .left h2{
+    font-size:28px;
+  }
+}
+/* ===== IMAGE IN CARD ===== */
+/* IMAGE IN LEFT SECTION */
+/* LEFT IMAGE CARD */
+.left-image-card {
+  flex: 1;
+  position: relative;
+  background: url('https://images.squarespace-cdn.com/content/v1/5eb964ed984e866b75642ff9/1606927276808-52SX7436NQBFP6GUFISD/tryon_store_female3.jpg') center/cover no-repeat;
+  border-radius: 18px 0 0 18px; /* rounded only left side */
+  overflow: hidden;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* optional dark overlay for text readability */
+.left-image-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+/* TEXT ON IMAGE */
+.left-image-card .text-on-image {
+  position: relative;
+  z-index: 2;
+}
+
+.left-image-card h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.left-image-card p {
+  font-size: 15px;
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+.left-image-card .info div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* adjust icons color */
+.left-image-card .info div i {
+  color: #d4af37; /* premium gold */
+}
+/* ===== LIGHT THEME ===== */
+/* ===== LIGHT THEME ===== */
+body.light-theme {
+  background: linear-gradient(120deg,#f5f5f5,#e0e0e0);
+  color:#0b0c10;
+}
+
+body.light-theme .navbar {
+  background: rgba(245,245,245,0.85);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+
+body.light-theme .nav-links a {
+  color:#0b0c10;
+}
+
+body.light-theme .nav-links a:hover {
+  color:#d4af37;
+}
+
+body.light-theme .logo {
+  background: linear-gradient(90deg, #d4af37, #0b0c10); /* gold to dark text */
+  -webkit-background-clip: text; /* ensures gradient is applied to text */
+  -webkit-text-fill-color: transparent; /* makes text itself transparent to show gradient */
+  background-clip: text; /* standard fallback */
+  text-shadow: 0 0 6px rgba(212, 175, 55, 0.4); /* subtle glow for readability */
+}
+
+body.light-theme .container {
+  background: rgba(0,0,0,0.05);
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.2),
+    0 25px 60px rgba(0,0,0,0.1);
+}
+
+body.light-theme .left h2 {
+  -webkit-text-fill-color: #0b0c10;
+  color: #0b0c10;
+  text-shadow: 0 0 3px rgba(212,175,55,0.3);
+}
+
+body.light-theme .left p,
+body.light-theme .left .info div {
+  color:#0b0c10;
+  opacity:0.9;
+}
+
+body.light-theme .left-image-card h2,
+body.light-theme .left-image-card p,
+body.light-theme .left-image-card .info div {
+  color:#0b0c10 !important;
+}
+
+body.light-theme .right {
+  background: rgba(255,255,255,0.95);
+}
+
+body.light-theme .inputBox input,
+body.light-theme .inputBox textarea,
+body.light-theme .inputBox label {
+  background:#fff;
+  color:#0b0c10;
+  border:1px solid rgba(212,175,55,0.5);
+}
+
+body.light-theme .inputBox input:focus,
+body.light-theme .inputBox textarea:focus,
+body.light-theme .inputBox input:focus ~ label,
+body.light-theme .inputBox textarea:focus ~ label {
+  color:#d4af37;
+  background:#fff;
+}
+
+body.light-theme button {
+  background: linear-gradient(135deg,#d4af37,#0b0c10);
+  color:#f5f5f5;
+}
+
+body.light-theme .footer {
+  background:#f5f5f5;
+  color:#0b0c10;
+  border-top:1px solid rgba(0,0,0,0.05);
+}
+
+body.light-theme .footer i {
+  color:#0b0c10;
+}
+.navbar .logo {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #d4af37, #f5f5f5);
+  -webkit-background-clip: text; /* clip gradient to text */
+  -webkit-text-fill-color: transparent; /* make text transparent to show gradient */
+  background-clip: text; /* standard fallback */
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+  letter-spacing: 6px; /* space between letters */
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">VOGUE.AI</div>
+  <div class="nav-links">
+  <a href="../index.html"><i class="fa fa-home"></i>Home</a>
+  <a href="recommend.html"><i class="fa fa-shirt"></i>Recommended</a>
+  <a href="tryon.html"><i class="fa fa-user"></i>Try-On</a>
+  <a href="contact.html"><i class="fa fa-envelope"></i>Contact</a>
+</div>
+<i class="fas fa-moon theme-toggle" id="themeToggle" title="Toggle Dark/Light" style="cursor:pointer; font-size:18px;"></i>
+</div>
+
+<!-- BG -->
+<div class="bg"></div>
+<div class="shape shape1"></div>
+<div class="shape shape2"></div>
+
+<!-- CONTACT -->
+<section>
+
+  <div class="container show" id="card">
+
+    <!-- LEFT: Full image background with text overlay -->
+    <div class="left left-image-card">
+
+      <div class="overlay"></div> <!-- optional dark overlay for readability -->
+
+      <div class="text-on-image">
+        <h2>Contact Us</h2>
+        <p>Let’s build something amazing together.</p>
+
+        <div class="info">
+          <div><i class="fas fa-envelope"></i> support@example.com</div>
+          <div><i class="fas fa-phone"></i> +91 98765 43210</div>
+          <div><i class="fas fa-location-dot"></i> India</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form only -->
+    <div class="right">
+      <form id="form">
+
+        <div class="inputBox">
+          <input type="text" required placeholder=" ">
+          <label>Name</label>
+        </div>
+
+        <div class="inputBox">
+          <input type="email" required placeholder=" ">
+          <label>Email</label>
+        </div>
+
+        <div class="inputBox">
+          <textarea rows="4" required placeholder=" "></textarea>
+          <label>Message</label>
+        </div>
+
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+
+        <div class="success" id="success">
+          Message Sent Successfully!
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <h3>VOGUE.AI</h3>
+  <p>Fashion Intelligence System</p>
+
+  <div class="socials">
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-twitter"></i>
+    <i class="fab fa-linkedin"></i>
+  </div>
+
+  <p>© 2026 VOGUE.AI | All Rights Reserved</p>
+</div>
+
+<script>
+// ===== DARK / LIGHT THEME TOGGLE =====
+const themeToggle = document.getElementById("themeToggle");
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-theme");
+
+  // Toggle icon
+  if(document.body.classList.contains("light-theme")) {
+    themeToggle.classList.remove("fa-moon");
+    themeToggle.classList.add("fa-sun");
+  } else {
+    themeToggle.classList.remove("fa-sun");
+    themeToggle.classList.add("fa-moon");
+  }
+});
+</script>
+
+</body>
+</html>

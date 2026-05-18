@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOGUE.AI</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+   <div class="logo">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDHhmYaMjlb7lmVA6cCOPfYTOwov8aXq3etQ&s" alt="VOGUE.AI Logo" class="logo-img">
+  <span class="logo-text">VOGUE.AI</span>
+</div>
+
+  <ul class="nav-links">
+    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="pages/recommend.html"><i class="fa fa-shirt"></i> Recommend</a></li>
+    <li><a href="pages/tryon.html"><i class="fa fa-magic"></i> Try-On</a></li>
+    <li><a href="pages/analyse.html"><i class="fa fa-chart-line"></i> Analyse</a></li>
+    <li><a href="pages/wardrobe.html"><i class="fa fa-briefcase"></i> Wardrobe</a></li>
+    <li><a href="pages/about.html"><i class="fa fa-info-circle"></i> About</a></li>
+    <li><a href="pages/contact.html"><i class="fa fa-envelope"></i> Contact</a></li>
+  </ul>
+
+  <div class="right">
+    <button id="toggle"><i class="fa fa-moon"></i></button>
+    <a href="pages/signup.html" class="profile">
+      <i class="fa fa-user"></i> Sign Up
+    </a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<!-- ================= HERO VIDEO BACKGROUND ================= -->
+<div class="video-container">
+  <video autoplay muted loop playsinline>
+    <source src="https://media.istockphoto.com/id/2264692950/video/fashion-display-with-colorful-dresses-in-a-modern-store-setting-showcasing-styles-for.mp4?s=mp4-640x640-is&k=20&c=pHGQmB86cYUP9A1Zxz7DDAtJBi742dFTdzDJFHp9JQs=" type="video/mp4">
+  </video>
+</div>
+
+<!-- HERO CONTENT -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">VOGUE.AI</h1>
+    <p class="hero-subtitle">
+      Revolutionizing <span class="accent-text">Fashion</span> with 
+      <span class="animated-underline">Artificial Intelligence</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= OUTFIT RECOMMENDER SECTION ================= -->
+<section class="features" id="outfit-recommender">
+  <div class="card">
+    <h2>Your Profile</h2>
+    <p>Tell us about yourself so we can craft perfectly tailored recommendations.</p>
+
+  <form id="outfit-form">
+
+  <div class="form-group">
+    <select id="bodyType" required>
+      <option value="" disabled selected hidden></option>
+      <option>Slim</option>
+      <option>Athletic</option>
+      <option>Curvy</option>
+      <option>Plus</option>
+      <option>Petite</option>
+    </select>
+    <label>Body Type</label>
+  </div>
+
+  <!-- SKIN TONE -->
+  <div class="form-group full">
+    <label style="position:static; transform:none; margin-bottom:6px;">Skin Tone</label>
+    <div class="skin-palette">
+      <span class="skin-tone" style="background:#f6d7c3;"></span>
+      <span class="skin-tone" style="background:#eac4a0;"></span>
+      <span class="skin-tone" style="background:#d8a679;"></span>
+      <span class="skin-tone" style="background:#b97a56;"></span>
+      <span class="skin-tone" style="background:#8d5524;"></span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <select id="gender" required>
+      <option value="" disabled selected hidden></option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+    <label>Gender</label>
+  </div>
+
+  <div class="form-group">
+    <select id="occasion" required>
+      <option value="" disabled selected hidden></option>
+      <option>Casual</option>
+      <option>Party</option>
+      <option>Wedding</option>
+      <option>Office</option>
+      <option>Formal</option>
+    </select>
+    <label>Occasion</label>
+  </div>
+
+  <div class="form-group">
+    <select id="season" required>
+      <option value="" disabled selected hidden></option>
+      <option>Spring</option>
+      <option>Summer</option>
+      <option>Autumn</option>
+      <option>Winter</option>
+    </select>
+    <label>Season</label>
+  </div>
+
+  <div class="form-group full">
+ <label class="static-label">Preferred Styles</label>
+<div class="style-options">
+  <div class="style-options">
+    <span class="style-chip">Minimalist</span>
+    <span class="style-chip">Romantic</span>
+    <span class="style-chip">Luxury</span>
+    <span class="style-chip">Streetwear</span>
+    <span class="style-chip">Officewear</span>
+    <span class="style-chip">Sporty</span>
+    <span class="style-chip">Bohemian</span>
+  </div>
+</div>
+
+  <div class="form-group full">
+    <label style="position:static; transform:none; margin-bottom:6px;">Favourite Colour Palette</label>
+    <div class="color-palette">
+      <span class="color-swatch" style="background:#ff6b6b;"></span>
+      <span class="color-swatch" style="background:#feca57;"></span>
+      <span class="color-swatch" style="background:#1dd1a1;"></span>
+      <span class="color-swatch" style="background:#5f27cd;"></span>
+      <span class="color-swatch" style="background:#54a0ff;"></span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <select id="budget">
+      <option value="" disabled selected hidden></option>
+      <option>&lt;$50</option>
+      <option>$50-$100</option>
+      <option>$100-$200</option>
+      <option>$200-$500</option>
+      <option>&gt;$500</option>
+    </select>
+    <label>Budget Range</label>
+  </div>
+
+  <div class="form-group full">
+    <textarea id="context" placeholder=" "></textarea>
+    <label>Additional Context</label>
+  </div>
+
+  <button type="submit" class="profile full">Generate</button>
+
+</form>
+
+ 
+
+    
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="features">
+
+  <!-- CARD 1 -->
+  <div class="card">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKb3QhiUDJNahGzORZB8YYWS2NmtFOUGEiww&s" alt="Outfit" class="card-img">
+    <i class="fa fa-shirt card-icon"></i>
+    <h2>Outfit Recommender</h2>
+    <p>Smart outfit suggestions using AI</p>
+    <a href="pages/recommend.html">Open</a>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card">
+    <img src="https://sourcingjournal.com/wp-content/uploads/2019/04/fxmirror-teas.jpg?w=910&h=511&crop=1" alt="TryOn" class="card-img">
+    <i class="fa fa-magic card-icon"></i>
+    <h2>Virtual Try-On</h2>
+    <p>Try clothes digitally on your body</p>
+    <a href="pages/tryon.html">Open</a>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8yLPc4MIFEv2NxHQis72GuOkEXkWSZeBYzA&s" alt="Style" class="card-img">
+    <i class="fa fa-chart-line card-icon"></i>
+    <h2>Style Analyzer</h2>
+    <p>Analyze your fashion style</p>
+    <a href="pages/analyse.html">Open</a>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card">
+    <img src="https://cdn.dribbble.com/userupload/18005772/file/original-6355594a4b253b7a9c23faa7e32eb461.png?format=webp&resize=400x300&vertical=center" alt="Wardrobe" class="card-img">
+    <i class="fa fa-briefcase card-icon"></i>
+    <h2>Wardrobe Builder</h2>
+    <p>Manage your outfits easily</p>
+    <a href="pages/wardrobe.html">Open</a>
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div class="footer-brand">
+      <h2>VOGUE.AI</h2>
+      <p>Smart fashion powered by Artificial Intelligence.</p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <a href="#">Home</a>
+      <a href="pages/about.html">About</a>
+      <a href="pages/contact.html">Contact</a>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="footer-contact">
+      <h3>Contact</h3>
+      <p>Email: support@vogueai.com</p>
+      <p>Phone: +91 98765 43210</p>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="footer-newsletter">
+      <h3>Subscribe</h3>
+      <p>Get latest fashion updates</p>
+
+      <div class="newsletter-box">
+        <input type="email" placeholder="Enter your email">
+        <button><i class="fa fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 VOGUE.AI | All Rights Reserved</p>
+  </div>
+
+</footer>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>

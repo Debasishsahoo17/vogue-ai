@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>Try-On | VOGUE.AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:#0f1115; --card:#161a20; --text:#e6e6e6; --muted:#9aa4b2;
+  --border:#2a2f38; --accent:#d4af37; --accent-light:rgba(212,175,55,0.12);
+}
+[data-theme="light"] {
+  --bg:#f7f8fa; --card:#fff; --text:#1a1a1a; --muted:#6b7280;
+  --border:#e5e7eb; --accent:#b8962e; --accent-light:rgba(212,175,55,0.08);
+}
+html { scroll-behavior:smooth; }
+body { margin:0; font-family:"Inter",sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; transition:background 0.5s,color 0.5s; }
+
+body::before {
+  content:""; position:fixed; inset:0; z-index:-1;
+  background:url('https://static.vecteezy.com/system/resources/thumbnails/015/126/149/small/statue-of-model-mannequin-in-gold-for-showcasing-fashion-formal-clothes-in-an-abstract-concept-on-stone-pallet-geometric-product-stand-isolate-on-black-background-with-promotion-sale-3d-rendering-photo.jpg') no-repeat center center/cover;
+  filter:brightness(0.35) contrast(1.1);
+}
+/* NAVBAR */
+.navbar { display:flex; justify-content:space-between; align-items:center; padding:18px 60px; border-bottom:1px solid var(--border); backdrop-filter:blur(14px); position:fixed; width:100%; top:0; background:rgba(22,26,32,0.88); z-index:1000; transition:0.4s; }
+[data-theme="light"] .navbar { background:rgba(255,255,255,0.88); }
+.logo { color:var(--accent); font-weight:700; font-size:20px; letter-spacing:1px; }
+.nav-links { display:flex; gap:25px; list-style:none; }
+.nav-links a { color:var(--muted); text-decoration:none; font-weight:500; font-size:14px; position:relative; transition:0.3s; }
+.nav-links a::after { content:""; position:absolute; bottom:-4px; left:0; width:0%; height:2px; background:var(--accent); transition:0.3s; }
+.nav-links a:hover::after { width:100%; } .nav-links a:hover { color:var(--text); }
+.toggle-container { width:56px; height:26px; border-radius:50px; background:rgba(255,255,255,0.1); border:1px solid var(--border); position:relative; cursor:pointer; }
+.toggle-circle { width:22px; height:22px; border-radius:50%; background:var(--accent); position:absolute; left:2px; top:2px; transition:0.4s; }
+[data-theme="light"] .toggle-circle { left:32px; }
+
+/* PAGE */
+.page { display:flex; justify-content:center; padding:120px 20px 60px; }
+.card {
+  width:100%; max-width:960px; padding:55px; border-radius:22px;
+  background:linear-gradient(145deg,rgba(22,26,32,0.96),rgba(22,26,32,0.75));
+  backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 25px 80px rgba(0,0,0,0.6);
+}
+[data-theme="light"] .card { background:linear-gradient(135deg,rgba(255,255,255,0.97),rgba(255,255,255,0.88)); box-shadow:0 20px 60px rgba(0,0,0,0.1); }
+
+.tag-label { font-size:11px; color:var(--accent); letter-spacing:2px; font-weight:600; }
+h1 { font-weight:700; font-size:34px; margin:10px 0 5px; }
+.desc { font-size:15px; line-height:1.6; color:var(--muted); margin-bottom:10px; }
+
+/* UPLOAD GRID */
+.upload-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:35px; }
+.upload-area {
+  border:2px dashed var(--border); border-radius:16px; padding:45px 20px;
+  text-align:center; cursor:pointer; position:relative; transition:0.3s;
+  background:rgba(255,255,255,0.02);
+}
+.upload-area:hover { border-color:var(--accent); background:var(--accent-light); }
+.upload-area .icon { font-size:36px; margin-bottom:10px; }
+.upload-area p { color:var(--muted); font-size:14px; margin:0; }
+.upload-area .filename { font-size:12px; color:var(--accent); margin-top:6px; font-weight:500; }
+.preview-img { width:100%; margin-top:15px; display:none; border-radius:10px; box-shadow:0 5px 20px rgba(0,0,0,0.4); max-height:260px; object-fit:cover; }
+
+/* CONTROLS */
+.controls { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:28px; }
+select {
+  width:100%; padding:14px; background:var(--card); border:1px solid var(--border);
+  color:var(--text); border-radius:10px; font-size:14px; transition:0.3s; outline:none;
+}
+select:hover { border-color:var(--accent); }
+
+/* BUTTONS */
+.buttons { display:flex; gap:15px; margin-top:35px; }
+.primary {
+  background:linear-gradient(135deg,#d4af37,#f5d76e); border:none;
+  padding:14px 32px; cursor:pointer; font-weight:600; border-radius:10px;
+  font-size:15px; transition:0.3s; flex:1;
+}
+.primary:hover { box-shadow:0 10px 30px rgba(212,175,55,0.45); transform:translateY(-2px); }
+.primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+.secondary {
+  border:1px solid var(--border); background:transparent; color:var(--text);
+  padding:14px 28px; border-radius:10px; cursor:pointer; transition:0.3s; font-size:15px;
+}
+.secondary:hover { background:rgba(255,255,255,0.06); }
+
+/* RESULT */
+.result-section { margin-top:40px; display:none; text-align:center; }
+.result-section h3 { font-size:18px; color:var(--accent); margin-bottom:15px; }
+.result-section img { max-width:420px; width:100%; border-radius:16px; box-shadow:0 15px 50px rgba(212,175,55,0.3); }
+.result-msg { margin-top:12px; font-size:13px; color:var(--muted); }
+
+/* LOADER */
+.loader { display:none; text-align:center; padding:30px 0; }
+.spinner { width:44px; height:44px; border:4px solid rgba(212,175,55,0.2); border-top-color:#d4af37; border-radius:50%; animation:spin 0.9s linear infinite; margin:0 auto 12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loader p { color:var(--muted); font-size:14px; }
+
+/* DEMO BADGE */
+.demo-badge { display:inline-block; background:rgba(212,175,55,0.15); color:#d4af37; border:1px solid rgba(212,175,55,0.3); padding:5px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-top:10px; }
+
+footer { text-align:center; padding:28px; margin-top:60px; border-top:1px solid var(--border); color:var(--muted); font-size:13px; }
+
+@media(max-width:700px) {
+  .upload-grid, .controls { grid-template-columns:1fr; }
+  .card { padding:30px 20px; }
+  .navbar { padding:14px 20px; }
+  .nav-links { gap:14px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">VOGUE.AI</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="recommend.html">Recommend</a></li>
+    <li><a href="analyse.html">Analyse</a></li>
+    <li><a href="wardrobe.html">Wardrobe</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="toggle-container" id="themeToggle"><div class="toggle-circle"></div></div>
+</nav>
+
+<section class="page">
+  <div class="card">
+    <p class="tag-label">VIRTUAL TRY-ON</p>
+    <h1>See It On You ✨</h1>
+    <p class="desc">Upload your photo and a clothing item — AI will overlay them for a virtual try-on preview.</p>
+    <div class="demo-badge">🧪 Demo Mode — OpenCV Overlay</div>
+
+    <div class="upload-grid">
+      <div class="upload-area" onclick="personInput.click()">
+        <div class="icon">🧍</div>
+        <p>Upload Your Photo</p>
+        <p class="filename" id="personName">No file chosen</p>
+        <img class="preview-img" id="personPreview">
+        <input type="file" id="personInput" accept="image/*" hidden>
+      </div>
+
+      <div class="upload-area" onclick="clothInput.click()">
+        <div class="icon">👕</div>
+        <p>Upload Clothing Item</p>
+        <p class="filename" id="clothName">No file chosen</p>
+        <img class="preview-img" id="clothPreview">
+        <input type="file" id="clothInput" accept="image/*" hidden>
+      </div>
+    </div>
+
+    <div class="controls">
+      <select id="garmentType">
+        <option value="">Garment Type</option>
+        <option>T-Shirt</option><option>Jacket</option><option>Blazer</option>
+        <option>Dress</option><option>Hoodie</option><option>Kurta</option>
+      </select>
+      <select id="size">
+        <option value="">Size</option>
+        <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+      </select>
+    </div>
+
+    <div class="buttons">
+      <button class="primary" id="tryBtn" onclick="doTryOn()">🪄 TRY NOW</button>
+      <button class="secondary" onclick="clearAll()">↺ CLEAR</button>
+    </div>
+
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      <p>AI is compositing your try-on…</p>
+    </div>
+
+    <div class="result-section" id="resultSection">
+      <h3>✨ Your Virtual Try-On Result</h3>
+      <img id="resultImg" src="" alt="Try-On Result">
+      <p class="result-msg" id="resultMsg"></p>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 VOGUE.AI — All Rights Reserved</footer>
+
+<script>
+const API = 'http://localhost:8080';
+
+// Theme
+document.getElementById('themeToggle').onclick = () => {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+};
+
+// Image preview
+function wirePreview(inputId, previewId, nameId) {
+  document.getElementById(inputId).onchange = e => {
+    const file = e.target.files[0];
+    if(!file) return;
+    document.getElementById(nameId).textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = document.getElementById(previewId);
+      img.src = reader.result;
+      img.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  };
+}
+wirePreview('personInput','personPreview','personName');
+wirePreview('clothInput','clothPreview','clothName');
+
+async function doTryOn() {
+  const personFile = document.getElementById('personInput').files[0];
+  const clothFile  = document.getElementById('clothInput').files[0];
+
+  if(!personFile || !clothFile) {
+    alert('⚠️ Please upload both your photo and the clothing item.');
+    return;
+  }
+
+  const btn = document.getElementById('tryBtn');
+  btn.disabled = true; btn.textContent = '⏳ Processing…';
+  document.getElementById('loader').style.display = 'block';
+  document.getElementById('resultSection').style.display = 'none';
+
+  const formData = new FormData();
+  formData.append('person', personFile);
+  formData.append('cloth',  clothFile);
+  formData.append('garmentType', document.getElementById('garmentType').value);
+  formData.append('size',        document.getElementById('size').value);
+
+  try {
+    const res  = await fetch(`${API}/api/tryon`, { method:'POST', body:formData });
+    const data = await res.json();
+    if(data.success) {
+      document.getElementById('resultImg').src = data.result_image;
+      document.getElementById('resultMsg').textContent = data.message;
+      document.getElementById('resultSection').style.display = 'block';
+      document.getElementById('resultSection').scrollIntoView({behavior:'smooth'});
+    } else {
+      alert('❌ ' + (data.error || 'Try-on failed'));
+    }
+  } catch(err) {
+    alert('❌ Cannot connect to backend. Make sure Flask is running on port 5000.');
+  } finally {
+    btn.disabled = false; btn.textContent = '🪄 TRY NOW';
+    document.getElementById('loader').style.display = 'none';
+  }
+}
+
+function clearAll() {
+  ['personPreview','clothPreview'].forEach(id => {
+    document.getElementById(id).src = '';
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('personName').textContent = 'No file chosen';
+  document.getElementById('clothName').textContent  = 'No file chosen';
+  document.getElementById('personInput').value = '';
+  document.getElementById('clothInput').value  = '';
+  document.getElementById('resultSection').style.display = 'none';
+}
+</script>
+</body>
+</html>
