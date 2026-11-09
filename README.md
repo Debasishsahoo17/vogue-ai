@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/vogue-ai-hero.png" alt="Original VOGUE.AI fashion technology artwork" width="100%">
+<img src="vogue-ai-hero.png" alt="Original VOGUE.AI fashion technology artwork" width="100%">
 
 # VOGUE.AI
 
